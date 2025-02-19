@@ -3,6 +3,7 @@
     "namespace": "NewExtApp",
     "version": "1.0.0.0",
     "framework": "ext",
+    "locale": "de",
 
     /**
      * The list of required packages (with optional versions; default is "latest").
@@ -229,6 +230,9 @@
             {
                 "path": "${framework.dir}/build/ext-modern-all-debug.js"
             }
+        ],
+        "requires": [
+            "ext-locale"
         ]
     },
 

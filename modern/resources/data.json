@@ -1,0 +1,42 @@
+[
+    {
+        "common": "Maple",
+        "botanical": "Acer",
+        "light": "Sunny",
+        "price": 12.99,
+        "availability": "03/15/2024",
+        "indoor": false
+    },
+    {
+        "common": "Oak",
+        "botanical": "Quercus",
+        "light": "Shade",
+        "price": 22.50,
+        "availability": "05/20/2024",
+        "indoor": true
+    },
+    {
+        "common": "Oak",
+        "botanical": "Quercus",
+        "light": "Mostly Sunny",
+        "price": 22.89,
+        "availability": "05/20/2024",
+        "indoor": true
+    },
+    {
+        "common": "simba",
+        "botanical": "lion",
+        "light": "Sun or Shade",
+        "price": 20.50,
+        "availability": "09/10/2024",
+        "indoor": true
+    },
+    {
+        "common": "star",
+        "botanical": "Quercus",
+        "light": "Mostly Shady",
+        "price": 28.50,
+        "availability": "12/25/2024",
+        "indoor": true
+    }
+]
