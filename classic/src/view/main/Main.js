@@ -1,103 +1,82 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting automatically applies the "viewport"
- * plugin causing this view to become the body element (i.e., the viewport).
- *
- * TODO - Replace this content of this view to suite the needs of your application.
- */
 Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
+    extend: 'Ext.grid.Panel', // Classic Toolkit Grid
+    xtype: 'cell-editing',
+    title: 'Cell Editing Plants',
 
     requires: [
-        'Ext.plugin.Viewport',
-        'Ext.window.MessageBox',
-
-        'NewExtApp.view.main.MainController',
-        'NewExtApp.view.main.MainModel',
-        'NewExtApp.view.main.List'
+        'Ext.grid.plugin.RowEditing' // Classic toolkit uses RowEditing plugin for cell editing
     ],
+    height: 400,
+    width: 700,
 
-    controller: 'main',
-    viewModel: 'main',
+    plugins: [{
+        ptype: 'rowediting' // Classic Toolkit row editing plugin
+    }],
 
-    ui: 'navigation',
-
-    tabBarHeaderPosition: 1,
-    titleRotation: 0,
-    tabRotation: 0,
-
-    header: {
-        layout: {
-            align: 'stretchmax'
-        },
-        title: {
-            bind: {
-                text: '{name}'
-            },
-            flex: 0
-        },
-        iconCls: 'fa-th-list'
-    },
-
-    tabBar: {
-        flex: 1,
-        layout: {
-            align: 'stretch',
-            overflowHandler: 'none'
-        }
-    },
-
-    responsiveConfig: {
-        tall: {
-            headerPosition: 'top'
-        },
-        wide: {
-            headerPosition: 'left'
-        }
-    },
-
-    defaults: {
-        bodyPadding: 20,
-        tabConfig: {
-            responsiveConfig: {
-                wide: {
-                    iconAlign: 'left',
-                    textAlign: 'left'
-                },
-                tall: {
-                    iconAlign: 'top',
-                    textAlign: 'center',
-                    width: 120
-                }
+    store: {
+        autoLoad: true,
+        fields: [
+            { name: 'common', type: 'string' },
+            { name: 'botanical', type: 'string' },
+            { name: 'light' },
+            { name: 'price', type: 'float' },
+            { name: 'availDate', mapping: 'availability', type: 'date', dateFormat: 'm/d/Y' },
+            { name: 'indoor', type: 'bool' }
+        ],
+        proxy: {
+            type: 'ajax',
+            url: 'classic/resources/data.json', // Classic Toolkit resource path
+            reader: {
+                type: 'json',
             }
         }
     },
 
-    items: [{
-        title: 'Home',
-        iconCls: 'fa-home',
-        // The following grid shares a store with the classic version's grid as well!
-        items: [{
-            xtype: 'mainlist'
-        }]
-    }, {
-        title: 'Users',
-        iconCls: 'fa-user',
-        bind: {
-            html: '{loremIpsum}'
+    columns: [{
+        text: 'Common Name',
+        flex: 1,
+        dataIndex: 'common',
+        editor: {
+            xtype: 'textfield'
         }
     }, {
-        title: 'Groups',
-        iconCls: 'fa-users',
-        bind: {
-            html: '{loremIpsum}'
+        text: 'Light',
+        width: 125,
+        dataIndex: 'light',
+        editor: {
+            xtype: 'combobox', // Classic Toolkit uses 'combobox'
+            store: [
+                'Shade',
+                'Mostly Shady',
+                'Sun or Shade',
+                'Mostly Sunny',
+                'Sunny'
+            ],
+            editable: false
         }
     }, {
-        title: 'Settings',
-        iconCls: 'fa-cog',
-        bind: {
-            html: '{loremIpsum}'
+        text: 'Price',
+        width: 100,
+        xtype: 'numbercolumn', // Classic Toolkit for numeric columns
+        dataIndex: 'price',
+        format: '0.00',
+        editor: {
+            xtype: 'numberfield',
+            minValue: 0
         }
+    }, {
+        text: 'Available',
+        xtype: 'datecolumn', // Classic Toolkit date column
+        format: 'M d, Y',
+        width: 125,
+        dataIndex: 'availDate',
+        editor: {
+            xtype: 'datefield', // Classic Toolkit uses 'datefield'
+            format: 'm/d/Y'
+        }
+    }, {
+        text: 'Indoor?',
+        xtype: 'checkcolumn', // Classic Toolkit uses checkcolumn
+        dataIndex: 'indoor'
     }]
 });
