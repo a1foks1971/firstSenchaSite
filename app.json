@@ -15,7 +15,8 @@
      *      ]
      */
     "requires": [
-        "font-awesome"
+        "font-awesome",
+        "locale"
     ],
 
     /**
@@ -230,9 +231,6 @@
             {
                 "path": "${framework.dir}/build/ext-modern-all-debug.js"
             }
-        ],
-        "requires": [
-            "ext-locale"
         ]
     },
 
