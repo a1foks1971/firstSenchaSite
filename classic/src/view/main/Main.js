@@ -1,103 +1,173 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting automatically applies the "viewport"
- * plugin causing this view to become the body element (i.e., the viewport).
- *
- * TODO - Replace this content of this view to suite the needs of your application.
- */
-Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
-    requires: [
-        'Ext.plugin.Viewport',
-        'Ext.window.MessageBox',
-
-        'NewExtApp.view.main.MainController',
-        'NewExtApp.view.main.MainModel',
-        'NewExtApp.view.main.List'
-    ],
-
-    controller: 'main',
-    viewModel: 'main',
-
-    ui: 'navigation',
-
-    tabBarHeaderPosition: 1,
-    titleRotation: 0,
-    tabRotation: 0,
-
-    header: {
-        layout: {
-            align: 'stretchmax'
-        },
-        title: {
-            bind: {
-                text: '{name}'
-            },
-            flex: 0
-        },
-        iconCls: 'fa-th-list'
-    },
-
-    tabBar: {
-        flex: 1,
-        layout: {
-            align: 'stretch',
-            overflowHandler: 'none'
-        }
-    },
-
-    responsiveConfig: {
-        tall: {
-            headerPosition: 'top'
-        },
-        wide: {
-            headerPosition: 'left'
-        }
-    },
-
-    defaults: {
-        bodyPadding: 20,
-        tabConfig: {
-            responsiveConfig: {
-                wide: {
-                    iconAlign: 'left',
-                    textAlign: 'left'
-                },
-                tall: {
-                    iconAlign: 'top',
-                    textAlign: 'center',
-                    width: 120
-                }
-            }
-        }
-    },
-
-    items: [{
-        title: 'Home',
-        iconCls: 'fa-home',
-        // The following grid shares a store with the classic version's grid as well!
-        items: [{
-            xtype: 'mainlist'
-        }]
+var states = Ext.create('Ext.data.Store', {
+    fields: ['abbr', 'name'],
+    data: [{
+        name: 'Alabama',
+        value: 'Alabama'
     }, {
-        title: 'Users',
-        iconCls: 'fa-user',
-        bind: {
-            html: '{loremIpsum}'
-        }
+        name: 'Alaska',
+        value: 'Alaska'
     }, {
-        title: 'Groups',
-        iconCls: 'fa-users',
-        bind: {
-            html: '{loremIpsum}'
-        }
+        name: 'Arizona',
+        value: 'Arizona'
     }, {
-        title: 'Settings',
-        iconCls: 'fa-cog',
-        bind: {
-            html: '{loremIpsum}'
-        }
+        name: 'Arkansas',
+        value: 'Arkansas'
+    }, {
+        name: 'California',
+        value: 'California'
+    }, {
+        name: 'Colorado',
+        value: 'Colorado'
+    }, {
+        name: 'Connecticut',
+        value: 'Connecticut'
+    }, {
+        name: 'Delaware',
+        value: 'Delaware'
+    }, {
+        name: 'Florida',
+        value: 'Florida'
+    }, {
+        name: 'Georgia',
+        value: 'Georgia'
+    }, {
+        name: 'Hawaii',
+        value: 'Hawaii'
+    }, {
+        name: 'Idaho',
+        value: 'Idaho'
+    }, {
+        name: 'Illinois',
+        value: 'Illinois'
+    }, {
+        name: 'Indiana',
+        value: 'Indiana'
+    }, {
+        name: 'Iowa',
+        value: 'Iowa'
+    }, {
+        name: 'Kansas',
+        value: 'Kansas'
+    }, {
+        name: 'Kentucky',
+        value: 'Kentucky'
+    }, {
+        name: 'Louisiana',
+        value: 'Louisiana'
+    }, {
+        name: 'Maine',
+        value: 'Maine'
+    }, {
+        name: 'Maryland',
+        value: 'Maryland'
+    }, {
+        name: 'Massachusetts',
+        value: 'Massachusetts'
+    }, {
+        name: 'Michigan',
+        value: 'Michigan'
+    }, {
+        name: 'Minnesota',
+        value: 'Minnesota'
+    }, {
+        name: 'Mississippi',
+        value: 'Mississippi'
+    }, {
+        name: 'Missouri',
+        value: 'Missouri'
+    }, {
+        name: 'Montana',
+        value: 'Montana'
+    }, {
+        name: 'Nebraska',
+        value: 'Nebraska'
+    }, {
+        name: 'Nevada',
+        value: 'Nevada'
+    }, {
+        name: 'New Hampshire',
+        value: 'New Hampshire'
+    }, {
+        name: 'New Jersey',
+        value: 'New Jersey'
+    }, {
+        name: 'New Mexico',
+        value: 'New Mexico'
+    }, {
+        name: 'New York',
+        value: 'New York'
+    }, {
+        name: 'North Carolina',
+        value: 'North Carolina'
+    }, {
+        name: 'North Dakota',
+        value: 'North Dakota'
+    }, {
+        name: 'Ohio',
+        value: 'Ohio'
+    }, {
+        name: 'Oklahoma',
+        value: 'Oklahoma'
+    }, {
+        name: 'Oregon',
+        value: 'Oregon'
+    }, {
+        name: 'Pennsylvania',
+        value: 'Pennsylvania'
+    }, {
+        name: 'Rhode Island',
+        value: 'Rhode Island'
+    }, {
+        name: 'South Carolina',
+        value: 'South Carolina'
+    }, {
+        name: 'South Dakota',
+        value: 'South Dakota'
+    }, {
+        name: 'Tennessee',
+        value: 'Tennessee'
+    }, {
+        name: 'Texas',
+        value: 'Texas'
+    }, {
+        name: 'Utah',
+        value: 'Utah'
+    }, {
+        name: 'Vermont',
+        value: 'Vermont'
+    }, {
+        name: 'Virginia',
+        value: 'Virginia'
+    }, {
+        name: 'Washington',
+        value: 'Washington'
+    }, {
+        name: 'West Virginia',
+        value: 'West Virginia'
+    }, {
+        name: 'Wisconsin',
+        value: 'Wisconsin'
+    }, {
+        name: 'Wyoming',
+        value: 'Wyoming'
     }]
+});
+
+Ext.define('NewExtApp.view.main.Main', {
+    extend: 'Ext.Container',
+    renderTo: Ext.getBody(),
+    height: 400,
+    width: 400,
+    items: [{
+        xtype: 'combobox',
+        fieldLabel: 'Choose State',
+        store: states,
+        height: 40,
+        queryMode: 'local',
+        displayField: 'name',
+        valueField: 'value',
+        editable: true,
+        placeholder: 'Enter state name',
+    }]
+
 });
