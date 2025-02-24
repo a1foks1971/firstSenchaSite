@@ -159,7 +159,7 @@ Ext.define('NewExtApp.view.main.Main', {
     height: 400,
     width: 400,
     items: [{
-        xtype: 'combobox',
+        xtype: 'comboboxfield',
         fieldLabel: 'Choose State',
         store: states,
         height: 40,
@@ -169,5 +169,6 @@ Ext.define('NewExtApp.view.main.Main', {
         editable: true,
         placeholder: 'Enter state name',
     }]
+
 
 });
