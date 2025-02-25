@@ -1,173 +1,94 @@
-var states = Ext.create('Ext.data.Store', {
-    fields: ['abbr', 'name'],
+Ext.create('Ext.data.Store', {
+    storeId: 'simpsonsStore',
+    requires:['Ext.grid.plugin.CellEditing'],
+    // fields: ['name', 'email', 'phone', 'dob', 'age'],
+    fields: [{
+        name: 'name',
+        type: 'string'
+    }, {
+        name: 'email',
+        type: 'string'
+    }, {
+        name: 'phone',
+        type: 'string'
+    }, {
+        name: 'dob',
+        type: 'date'
+    }, {
+        name: 'age',
+       // type: 'number'
+    }],
     data: [{
-        name: 'Alabama',
-        value: 'Alabama'
+        name: 'Lisa',
+        email: 'lisa@simpsons.com',
+        phone: '555-111-1224',
+        dob: new Date('2012-01-01'),
+        age: 10
     }, {
-        name: 'Alaska',
-        value: 'Alaska'
+        name: 'Bart',
+        email: 'bart@simpsons.com',
+        phone: '555-222-1234',
+        age: 12
     }, {
-        name: 'Arizona',
-        value: 'Arizona'
+        name: 'Homer',
+        email: 'homer@simpsons.com',
+        phone: '555-222-1244',
+        dob: new Date('2012-02-02'),
+        age: 40
     }, {
-        name: 'Arkansas',
-        value: 'Arkansas'
-    }, {
-        name: 'California',
-        value: 'California'
-    }, {
-        name: 'Colorado',
-        value: 'Colorado'
-    }, {
-        name: 'Connecticut',
-        value: 'Connecticut'
-    }, {
-        name: 'Delaware',
-        value: 'Delaware'
-    }, {
-        name: 'Florida',
-        value: 'Florida'
-    }, {
-        name: 'Georgia',
-        value: 'Georgia'
-    }, {
-        name: 'Hawaii',
-        value: 'Hawaii'
-    }, {
-        name: 'Idaho',
-        value: 'Idaho'
-    }, {
-        name: 'Illinois',
-        value: 'Illinois'
-    }, {
-        name: 'Indiana',
-        value: 'Indiana'
-    }, {
-        name: 'Iowa',
-        value: 'Iowa'
-    }, {
-        name: 'Kansas',
-        value: 'Kansas'
-    }, {
-        name: 'Kentucky',
-        value: 'Kentucky'
-    }, {
-        name: 'Louisiana',
-        value: 'Louisiana'
-    }, {
-        name: 'Maine',
-        value: 'Maine'
-    }, {
-        name: 'Maryland',
-        value: 'Maryland'
-    }, {
-        name: 'Massachusetts',
-        value: 'Massachusetts'
-    }, {
-        name: 'Michigan',
-        value: 'Michigan'
-    }, {
-        name: 'Minnesota',
-        value: 'Minnesota'
-    }, {
-        name: 'Mississippi',
-        value: 'Mississippi'
-    }, {
-        name: 'Missouri',
-        value: 'Missouri'
-    }, {
-        name: 'Montana',
-        value: 'Montana'
-    }, {
-        name: 'Nebraska',
-        value: 'Nebraska'
-    }, {
-        name: 'Nevada',
-        value: 'Nevada'
-    }, {
-        name: 'New Hampshire',
-        value: 'New Hampshire'
-    }, {
-        name: 'New Jersey',
-        value: 'New Jersey'
-    }, {
-        name: 'New Mexico',
-        value: 'New Mexico'
-    }, {
-        name: 'New York',
-        value: 'New York'
-    }, {
-        name: 'North Carolina',
-        value: 'North Carolina'
-    }, {
-        name: 'North Dakota',
-        value: 'North Dakota'
-    }, {
-        name: 'Ohio',
-        value: 'Ohio'
-    }, {
-        name: 'Oklahoma',
-        value: 'Oklahoma'
-    }, {
-        name: 'Oregon',
-        value: 'Oregon'
-    }, {
-        name: 'Pennsylvania',
-        value: 'Pennsylvania'
-    }, {
-        name: 'Rhode Island',
-        value: 'Rhode Island'
-    }, {
-        name: 'South Carolina',
-        value: 'South Carolina'
-    }, {
-        name: 'South Dakota',
-        value: 'South Dakota'
-    }, {
-        name: 'Tennessee',
-        value: 'Tennessee'
-    }, {
-        name: 'Texas',
-        value: 'Texas'
-    }, {
-        name: 'Utah',
-        value: 'Utah'
-    }, {
-        name: 'Vermont',
-        value: 'Vermont'
-    }, {
-        name: 'Virginia',
-        value: 'Virginia'
-    }, {
-        name: 'Washington',
-        value: 'Washington'
-    }, {
-        name: 'West Virginia',
-        value: 'West Virginia'
-    }, {
-        name: 'Wisconsin',
-        value: 'Wisconsin'
-    }, {
-        name: 'Wyoming',
-        value: 'Wyoming'
+        name: 'Marge',
+        email: 'marge@simpsons.com',
+        phone: '555-222-1254',
+        dob: new Date('2012-03-03'),
+        age: 38
     }]
-});
-
-Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.Container',
-    renderTo: Ext.getBody(),
-    height: 400,
-    width: 400,
-    items: [{
-        xtype: 'combobox',
-        fieldLabel: 'Choose State',
-        store: states,
-        height: 40,
-        queryMode: 'local',
-        displayField: 'name',
-        valueField: 'value',
-        editable: true,
-        placeholder: 'Enter state name',
-    }]
-
+    });
+    
+    Ext.define('NewExtApp.view.main.Main', {
+    extend: 'Ext.grid.Panel',
+    title: 'Simpsons',
+    store: Ext.data.StoreManager.lookup('simpsonsStore'),
+    columns: [{
+        header: 'Name',
+        dataIndex: 'name',
+        editor: 'textfield'
+    }, {
+        header: 'Email',
+        dataIndex: 'email',
+        editor: 'textfield'
+    }, {
+        header: 'Phone',
+        dataIndex: 'phone',
+        editor: 'textfield'
+    }, {
+        xtype: 'datecolumn',
+        header: 'DOB',
+        dataIndex: 'dob',
+        format: 'Y-m-d',
+        editor: {
+            xtype: 'datefield'
+        }
+    
+    }, {
+        text: 'Age',
+        flex: 1,
+        dataIndex: 'age',
+        xtype : 'numbercolumn',
+        editor: {
+            xtype: 'numberfield'
+        }
+    
+    }],
+    selModel: 'cellmodel',
+    plugins: {
+        ptype: 'cellediting',
+        clicksToEdit: 1
+    
+    },
+    
+    height: 200,
+    width: 600,
+    minHeight: 30,
+    renderTo: Ext.getBody()
+    
 });
