@@ -1,0 +1,58 @@
+[{
+    "id": 1001,
+    "calendarId": 1,
+    "allDay"      : false,
+    "startDate"   : "2024-02-07T00:00:00.000Z",
+    "endDate"     : "2024-02-07T23:45:00.000Z",
+    "title"       : "2 day event",
+    "description" : "This event runs Feb 6, 6pm CDT and ends Feb 7, 5:45pm CDT"
+    }, {
+    "id": 1002,
+    "calendarId": 1,
+    "allDay"      : false,
+    "startDate"   : "2024-02-22T20:00:00.000Z",
+    "endDate"     : "2024-02-22T22:00:00.000Z",
+    "title"       : "Dentist",
+    "description" : "Dental Appointment - Feb 22 @ 14:00 CDT for 2 hours"
+    },
+    {
+    "id": 2001,
+    "calendarId": 2,
+    "allDay"      : "true, ew TZ",
+    "startDate"   : "2024-02-14T00:00:00.000Z",
+    "endDate"     : "2024-02-15T00:00:00.000Z",
+    "title"       : "Valentine's Day",
+    "description" : "Valentine's Day (North America)"
+    }, {
+    "id": 2002,
+    "calendarId": 2,
+    "allDay"      : true,
+    "startDate"   : "2024-02-02T00:00:00.000Z",
+    "endDate"     : "2024-02-03T00:00:00.000Z",
+    "title"       : "Groundhog Day",
+    "description" : "Groundhog Day (North America)"
+    }, {
+    "id": 2003,
+    "calendarId": 2,
+    "allDay"      : true,
+    "startDate"   : "2024-02-10T00:00:00.000Z",
+    "endDate"     : "2024-02-11T00:00:00.000Z",
+    "title"       : "Lunar New Year",
+    "description" : "Lunar New Year (World Wide)"
+    }, {
+    "id": 2004,
+    "calendarId": 2,
+    "allDay"      : true,
+    "startDate"   : "2024-02-19T00:00:00.000Z",
+    "endDate"     : "2024-02-20T00:00:00.000Z",
+    "title"       : "President's Day",
+    "description" : "President's Day (USA)"
+    }, {
+    "id": 2005,
+    "calendarId": 2,
+    "allDay"      : true,
+    "startDate"   : "2024-02-25T00:00:00.000Z",
+    "endDate"     : "2024-03-03T00:00:00.000Z",
+    "title"       : "Telecommuter Appreciation Week",
+    "description" : "Telecommuter Appreciation Week"
+    }]

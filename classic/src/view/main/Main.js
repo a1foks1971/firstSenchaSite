@@ -1,51 +1,53 @@
-Ext.define('MyModel', {
-    extend: 'Ext.calendar.model.Calendar',
+var myStore = {
+    autoLoad: true,
+    // storeId: 'peronsStore',
     proxy: {
-        api: {
-            read: "http://localhost:3000/calendars"
-        }
+        type: 'ajax',
+        url: 'classic/resources/calendar.json',
     },
     eventStoreDefaults: {
         proxy: {
-            api: {
-                read: "http://localhost:3000/events",
-                destroy: "http://localhost:3000/delete"
-            }
+            type: 'ajax',
+            url: "classic/resources/events.json",
+            extraParams: {
+                fromDate: '{dateFrom}', //taken from viewModel?
+                toDate: '{dateTo}' //taken from viewModel?
+            },
         }
     }
-    });
+    };
     
     Ext.define('NewExtApp.view.main.Main', {
-    extend:"Ext.panel.Panel",
-    items: [ {
-        xtype: 'calendar',
-        itemId: 'calendar',
-        height: 400,
-        width: 600,
-        value: new Date('2023-02-01'),
-        sideBar: {
-            xtype: 'panel',
-            items: [{
-                xtype: 'textfield',
-                itemId: 'title'
-            }, {
-                xtype: 'button',
-                text: 'Filter by title',
-                handler: function () {
-                    var calendar = this.up('#calendar');
-                    var title = calendar.down('#title').value;
-                    calendar.getStore().getAt(0).events().filter('title', title); // Personal
-                    calendar.getStore().getAt(1).events().filter('title', title); // Work
-                }
-            }]
-        },
-        store: {
-            model: 'MyModel',
-            autoLoad: true,
-            eventStoreDefaults: {
-                autoSync: true
+    extend: "Ext.panel.Panel",
+    fullscreen: true,
+    scrollable: true,
+    tabBarPosition: 'top',
+    layout: 'fit',
+    padding: 10,
+    defaults: {
+        margin: 10
+    },
+    viewModel: {
+        data: {
+            search: {
+                fromDate: new Date(),
+                toDate: new Date()
             }
         }
-    }]
+    },
+    items: [{
+        xtype: 'calendar',
+        id: 'mycalendar',
+        store: myStore,
+        flex: 1,
+        value: new Date('02/01/2024'),
+        viewModel: {
+            data: {
+                dateFrom: new Date(),
+                dateTo: new Date()
+            }
+        },
+    
+    }],
     
 });

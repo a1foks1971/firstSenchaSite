@@ -1,56 +1,53 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting causes an instance of this class to be created and
- * added to the Viewport container.
- */
-Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
-    requires: [
-        'Ext.MessageBox',
-        'Ext.layout.Fit'
-    ],
-
-    controller: 'main',
-    viewModel: 'main',
-
+var myStore = {
+    autoLoad: true,
+    // storeId: 'peronsStore',
+    proxy: {
+        type: 'ajax',
+        url: 'classic/resources/calendar.json',
+    },
+    eventStoreDefaults: {
+        proxy: {
+            type: 'ajax',
+            url: "classic/resources/events.json",
+            extraParams: {
+                fromDate: '{dateFrom}', //taken from viewModel?
+                toDate: '{dateTo}' //taken from viewModel?
+            },
+        }
+    }
+    };
+    
+    Ext.define('NewExtApp.view.main.Main', {
+    extend: "Ext.panel.Panel",
+    fullscreen: true,
+    scrollable: true,
+    tabBarPosition: 'top',
+    layout: 'fit',
+    padding: 10,
     defaults: {
-        tab: {
-            iconAlign: 'top'
+        margin: 10
+    },
+    viewModel: {
+        data: {
+            search: {
+                fromDate: new Date(),
+                toDate: new Date()
+            }
         }
     },
-
-    tabBarPosition: 'bottom',
-
-    items: [
-        // TODO - Replace the content of this view to suit the needs of your application.
-        {
-            title: 'Home',
-            iconCls: 'x-fa fa-home',
-            layout: 'fit',
-            // The following grid shares a store with the classic version's grid as well!
-            items: [{
-                xtype: 'mainlist'
-            }]
-        },{
-            title: 'Users',
-            iconCls: 'x-fa fa-user',
-            bind: {
-                html: '{loremIpsum}'
+    items: [{
+        xtype: 'calendar',
+        id: 'mycalendar',
+        store: myStore,
+        flex: 1,
+        value: new Date('02/01/2024'),
+        viewModel: {
+            data: {
+                dateFrom: new Date(),
+                dateTo: new Date()
             }
-        },{
-            title: 'Groups',
-            iconCls: 'x-fa fa-users',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Settings',
-            iconCls: 'x-fa fa-cog',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        }
-    ]
+        },
+    
+    }],
+    
 });
