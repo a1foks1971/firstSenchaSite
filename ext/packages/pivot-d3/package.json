@@ -1,0 +1,107 @@
+{
+  "name": "pivot-d3",
+  "namespace": "Ext",
+  "format": "1",
+  "version": "7.9.0",
+  "creator": "Sencha",
+  "summary": "Sencha Pivot integration with D3",
+  "detailedDescription": "Pivot components working with D3",
+  "type": "code",
+  "requires": [
+    "pivot",
+    "d3"
+  ],
+  "signatures": [
+    {
+      "name": "Sencha",
+      "uuid": "76c71712-41cd-4537-a7c8-b6bbb67f2f49",
+      "created": "2025-01-15T16:19:17Z",
+      "algorithm": "SHA1withRSA",
+      "nonce": "9pQn6GrtKpY\u003d",
+      "signature": "YtAqHmWYUicDVWlfrXPtIoKhfmHnFC41VCAqMWsgmtpV94UMWOfYPEF5Iw/RzeZixwTJ3DHMn4nmo3+bXTTpL+TWsp47LfRL7loNCEJO2zzp6xOZc6T/nOTL12sSOnqWSKctNEk2sowkhZqJvyyS3Jz8lE5OYbytK04xVwa58k2cJAtUTG550ElFd1slhXZeyWHWUfLw0BmbHyab5AY+sQk7uQguyhj+3ATeyohPyWFH1SP6oRzV0WxbeIBu/8/z42T22eFtGz3V85xmdT1oICHHCOxcZ2CzCPqS0Nk5S4KLLwav0PGzNw23mzw0QCgX4lwxNSSW2Y4y+/LX8mNTiQ\u003d\u003d"
+    }
+  ],
+  "resources": [
+    {
+      "path": "resources"
+    },
+    {
+      "path": "${toolkit.name}/resources"
+    }
+  ],
+  "slicer": {
+    "js": [
+      {
+        "path": "${package.dir}/sass/example/custom.js",
+        "isWidgetManifest": true
+      }
+    ]
+  },
+  "builds": {
+    "triton": {
+      "toolkit": "classic",
+      "theme": "theme-triton"
+    },
+    "neptune": {
+      "toolkit": "classic",
+      "theme": "theme-neptune"
+    },
+    "crisp": {
+      "toolkit": "classic",
+      "theme": "theme-crisp"
+    },
+    "classic": {
+      "toolkit": "classic",
+      "theme": "theme-classic"
+    },
+    "classic-material": {
+      "toolkit": "classic",
+      "theme": "theme-material"
+    },
+    "modern-triton": {
+      "toolkit": "modern",
+      "theme": "theme-triton"
+    },
+    "modern-neptune": {
+      "toolkit": "modern",
+      "theme": "theme-neptune"
+    },
+    "ios": {
+      "toolkit": "modern",
+      "theme": "theme-ios"
+    },
+    "material": {
+      "toolkit": "modern",
+      "theme": "theme-material"
+    }
+  },
+  "framework": "ext",
+  "output": {
+    "base": "${package.dir}/build/${toolkit.name}/${build.id}",
+    "js": "..",
+    "sass": ""
+  },
+  "sass": {
+    "namespace": "Ext",
+    "etc": [
+      "${package.dir}/sass/etc/all.scss",
+      "${package.dir}/${toolkit.name}/sass/etc/all.scss"
+    ],
+    "var": [
+      "${package.dir}/sass/var",
+      "${package.dir}/${toolkit.name}/sass/var"
+    ],
+    "src": [
+      "${package.dir}/sass/src",
+      "${package.dir}/${toolkit.name}/sass/src"
+    ]
+  },
+  "classpath": [
+    "${package.dir}/src",
+    "${package.dir}/${toolkit.name}/src"
+  ],
+  "overrides": [
+    "${package.dir}/overrides",
+    "${package.dir}/${toolkit.name}/overrides"
+  ]
+}

@@ -1,103 +1,51 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting automatically applies the "viewport"
- * plugin causing this view to become the body element (i.e., the viewport).
- *
- * TODO - Replace this content of this view to suite the needs of your application.
- */
-Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
-    requires: [
-        'Ext.plugin.Viewport',
-        'Ext.window.MessageBox',
-
-        'NewExtApp.view.main.MainController',
-        'NewExtApp.view.main.MainModel',
-        'NewExtApp.view.main.List'
-    ],
-
-    controller: 'main',
-    viewModel: 'main',
-
-    ui: 'navigation',
-
-    tabBarHeaderPosition: 1,
-    titleRotation: 0,
-    tabRotation: 0,
-
-    header: {
-        layout: {
-            align: 'stretchmax'
-        },
-        title: {
-            bind: {
-                text: '{name}'
-            },
-            flex: 0
-        },
-        iconCls: 'fa-th-list'
-    },
-
-    tabBar: {
-        flex: 1,
-        layout: {
-            align: 'stretch',
-            overflowHandler: 'none'
+Ext.define('MyModel', {
+    extend: 'Ext.calendar.model.Calendar',
+    proxy: {
+        api: {
+            read: "http://localhost:3000/calendars"
         }
     },
-
-    responsiveConfig: {
-        tall: {
-            headerPosition: 'top'
-        },
-        wide: {
-            headerPosition: 'left'
-        }
-    },
-
-    defaults: {
-        bodyPadding: 20,
-        tabConfig: {
-            responsiveConfig: {
-                wide: {
-                    iconAlign: 'left',
-                    textAlign: 'left'
-                },
-                tall: {
-                    iconAlign: 'top',
-                    textAlign: 'center',
-                    width: 120
-                }
+    eventStoreDefaults: {
+        proxy: {
+            api: {
+                read: "http://localhost:3000/events",
+                destroy: "http://localhost:3000/delete"
             }
         }
-    },
-
-    items: [{
-        title: 'Home',
-        iconCls: 'fa-home',
-        // The following grid shares a store with the classic version's grid as well!
-        items: [{
-            xtype: 'mainlist'
-        }]
-    }, {
-        title: 'Users',
-        iconCls: 'fa-user',
-        bind: {
-            html: '{loremIpsum}'
-        }
-    }, {
-        title: 'Groups',
-        iconCls: 'fa-users',
-        bind: {
-            html: '{loremIpsum}'
-        }
-    }, {
-        title: 'Settings',
-        iconCls: 'fa-cog',
-        bind: {
-            html: '{loremIpsum}'
+    }
+    });
+    
+    Ext.define('NewExtApp.view.main.Main', {
+    extend:"Ext.panel.Panel",
+    items: [ {
+        xtype: 'calendar',
+        itemId: 'calendar',
+        height: 400,
+        width: 600,
+        value: new Date('2023-02-01'),
+        sideBar: {
+            xtype: 'panel',
+            items: [{
+                xtype: 'textfield',
+                itemId: 'title'
+            }, {
+                xtype: 'button',
+                text: 'Filter by title',
+                handler: function () {
+                    var calendar = this.up('#calendar');
+                    var title = calendar.down('#title').value;
+                    calendar.getStore().getAt(0).events().filter('title', title); // Personal
+                    calendar.getStore().getAt(1).events().filter('title', title); // Work
+                }
+            }]
+        },
+        store: {
+            model: 'MyModel',
+            autoLoad: true,
+            eventStoreDefaults: {
+                autoSync: true
+            }
         }
     }]
+    
 });
