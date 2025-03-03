@@ -1,103 +1,175 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting automatically applies the "viewport"
- * plugin causing this view to become the body element (i.e., the viewport).
- *
- * TODO - Replace this content of this view to suite the needs of your application.
- */
+Ext.create("Ext.data.Store", {
+    storeId: "simpsonsStore",
+    fields: ["name", "email", "phone"],
+    data: [{
+        name: "Lisa",
+        email: "lisa@simpsons.com",
+        phone: "555-111-1224",
+        age: 12,
+        dept: "A",
+        deptno: 1,
+    }, {
+        name: "Bart",
+        email: "bart@simpsons.com",
+        phone: "555-222-1234",
+        age: 12,
+        dept: "A",
+        deptno: 1,
+    }, {
+        name: "Homer",
+        email: "homer@simpsons.com",
+        phone: "555-222-1244",
+        age: 12,
+        dept: "A",
+        deptno: 1,
+    }, {
+        name: "Marge",
+        email: "marge@simpsons.com",
+        phone: "555-222-1254",
+        age: 12,
+        dept: "A",
+        deptno: 1,
+    }, ],
+});
+
 Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
+   extend: 'Ext.grid.Panel',
+   title: "Simpsons",
 
-    requires: [
-        'Ext.plugin.Viewport',
-        'Ext.window.MessageBox',
+    store: Ext.data.StoreManager.lookup("simpsonsStore"),
+    columns: [{
 
-        'NewExtApp.view.main.MainController',
-        'NewExtApp.view.main.MainModel',
-        'NewExtApp.view.main.List'
-    ],
+        text: "Name",
+        dataIndex: "name",
 
-    controller: 'main',
-    viewModel: 'main',
-
-    ui: 'navigation',
-
-    tabBarHeaderPosition: 1,
-    titleRotation: 0,
-    tabRotation: 0,
-
-    header: {
-        layout: {
-            align: 'stretchmax'
-        },
-        title: {
-            bind: {
-                text: '{name}'
-            },
-            flex: 0
-        },
-        iconCls: 'fa-th-list'
-    },
-
-    tabBar: {
-        flex: 1,
-        layout: {
-            align: 'stretch',
-            overflowHandler: 'none'
-        }
-    },
-
-    responsiveConfig: {
-        tall: {
-            headerPosition: 'top'
-        },
-        wide: {
-            headerPosition: 'left'
-        }
-    },
-
-    defaults: {
-        bodyPadding: 20,
-        tabConfig: {
-            responsiveConfig: {
-                wide: {
-                    iconAlign: 'left',
-                    textAlign: 'left'
-                },
-                tall: {
-                    iconAlign: 'top',
-                    textAlign: 'center',
-                    width: 120
-                }
-            }
-        }
-    },
-
-    items: [{
-        title: 'Home',
-        iconCls: 'fa-home',
-        // The following grid shares a store with the classic version's grid as well!
-        items: [{
-            xtype: 'mainlist'
-        }]
     }, {
-        title: 'Users',
-        iconCls: 'fa-user',
-        bind: {
-            html: '{loremIpsum}'
-        }
+
+        text: " HR Department Information",
+        columns: [{
+            text: "DeptNO",
+            dataIndex: "deptno"
+        }, {
+            text: "Department",
+            dataIndex: "dept"
+        }, ],
     }, {
-        title: 'Groups',
-        iconCls: 'fa-users',
-        bind: {
-            html: '{loremIpsum}'
-        }
+
+        text: " HR Personal Information",
+        columns: [{
+            text: "EmailId",
+            dataIndex: "email"
+        }, {
+            "hidden": true,
+            text: "Phone",
+            dataIndex: "phone"
+        }, {
+            text: "AGE",
+            dataIndex: "age"
+        }, {
+            text: "Department",
+            dataIndex: "dept"
+        }, ],
     }, {
-        title: 'Settings',
-        iconCls: 'fa-cog',
-        bind: {
-            html: '{loremIpsum}'
-        }
-    }]
+
+        text: " HR OverAll Information",
+        columns: [{
+            "hidden": true,
+            text: "DeptNO1",
+            dataIndex: "deptno"
+        }, {
+            text: "Department",
+            dataIndex: "dept"
+        }, {
+            text: "EmailId",
+            dataIndex: "email"
+        }, {
+            text: "Phone",
+            dataIndex: "phone"
+        }, {
+            "hidden": true,
+            text: "AGE1",
+            dataIndex: "age"
+        }, {
+            text: "Name",
+            dataIndex: "name"
+        }, {
+            text: "Phone1",
+            dataIndex: "phone"
+        }, {
+            text: "AGE",
+            dataIndex: "age"
+        }, ],
+    }, {
+
+        text: "Analyist Personal Information",
+        columns: [{
+            text: "EmailId",
+            dataIndex: "email"
+        }, {
+            text: "Phone",
+            dataIndex: "phone"
+        }, {
+            "hidden": true,
+            text: "AGE1",
+            dataIndex: "age"
+        }, {
+            text: "AGE",
+            dataIndex: "age"
+        }, {
+            text: "Department",
+            dataIndex: "dept"
+        }, ],
+    }, {
+
+        text: "Developer Personal Information",
+        columns: [{
+            "hidden": true,
+            text: "EmailId1",
+            dataIndex: "email"
+        }, {
+            text: "Phone",
+            dataIndex: "phone"
+        }, {
+            text: "AGE1",
+            dataIndex: "age"
+        }, {
+            text: "AGE",
+            dataIndex: "age"
+        }, {
+            text: "EmailId",
+            dataIndex: "email"
+        }, {
+            text: "Department",
+            dataIndex: "dept"
+        }, ],
+    }, {
+
+        text: "QC Personal Information",
+        columns: [{
+            text: "EmailId",
+            dataIndex: "email"
+        }, {
+            "hidden": true,
+            text: "Phone",
+            dataIndex: "phone"
+        }, {
+            text: "AGE",
+            dataIndex: "age"
+        }, {
+            text: "Department",
+            dataIndex: "dept"
+        }, ],
+    }, {
+
+        text: "Developer Department Information",
+        columns: [{
+            text: "DeptNO",
+            dataIndex: "deptno"
+        }, {
+            text: "Department",
+            dataIndex: "dept"
+        } ],
+    }],
+    renderTo: Ext.getBody(),
+   
 });
