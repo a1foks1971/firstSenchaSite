@@ -10,7 +10,9 @@ Ext.application({
     requires: [
         // This will automatically load all classes in the NewExtApp namespace
         // so that application classes do not need to require each other.
-        'NewExtApp.*'
+        'NewExtApp.*',
+        'Ext.grid.plugin.CellEditing',
+        'Ext.grid.plugin.filterbar.FilterBar'    
     ],
 
     // The name of the initial view to create.

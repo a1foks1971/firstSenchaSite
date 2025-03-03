@@ -1,56 +1,105 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting causes an instance of this class to be created and
- * added to the Viewport container.
- */
-Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
-    requires: [
-        'Ext.MessageBox',
-        'Ext.layout.Fit'
-    ],
-
-    controller: 'main',
-    viewModel: 'main',
-
-    defaults: {
-        tab: {
-            iconAlign: 'top'
-        }
+var store = Ext.create('Ext.data.Store', {
+    fields: ['id', 'show', 'combo', 'date'],
+    data: [{
+        'id': '0',
+        "show": "Battlestar Galactica",
+        "combo": "A",
+        "date": "21/Oct/75"
+    }, {
+        'id': '1',
+        "show": "Doctor Who",
+        "combo": "B",
+        "date": "21/Oct/76"
+    }, {
+        'id': '2',
+        "show": "Farscape",
+        "combo": "C",
+        "date": "21/Oct/77"
+    }, {
+        'id': '3',
+        "show": "Firefly",
+        "combo": "A",
+        "date": "21/Oct/78"
     },
-
-    tabBarPosition: 'bottom',
-
-    items: [
-        // TODO - Replace the content of this view to suit the needs of your application.
-        {
-            title: 'Home',
-            iconCls: 'x-fa fa-home',
-            layout: 'fit',
-            // The following grid shares a store with the classic version's grid as well!
-            items: [{
-                xtype: 'mainlist'
-            }]
-        },{
-            title: 'Users',
-            iconCls: 'x-fa fa-user',
-            bind: {
-                html: '{loremIpsum}'
+    {
+        'id': '4',
+        "show": "Star Trek",
+        "combo": "A",
+        "date": "21/Oct/79"
+    },
+    {
+        'id': '5',
+        "show": "Star Wars: Christmas Special",
+        "combo": "D",
+        "date": "21/Oct/80"
+       }]
+       });
+    
+    var columns = [
+    {
+        text: 'ID',
+        dataIndex: 'id',
+        flex: 1,
+       },
+    
+    {
+        text: 'Show',
+        dataIndex: 'show',
+        flex: 1,
+    
+    // Turn on Cell Editing
+    editable: true,
+    filterType: 'string'
+    }, {
+    dataIndex: 'combo',
+    text: 'Combo',
+    //flex: 1,
+    width: '150px',
+    filterType: {
+        type: 'list',
+        fieldDefaults: {
+            listeners: {
+                //focus: filterFocus,
+                //blur: filterBlur,
             }
-        },{
-            title: 'Groups',
-            iconCls: 'x-fa fa-users',
-            bind: {
-                html: '{loremIpsum}'
+        },
+        dataIndex: 'combo',
+    }
+    }, {
+        dataIndex: 'date',
+        xtype: 'datecolumn',
+        text: 'Date',
+        flex: 1,
+        format: 'd-M-Y',
+        filterType: {
+            // required configs
+            type: 'date',
+            // optional configs
+            //value: 'star', // setting a value makes the filter active.
+            fieldDefaults: {
+                // any Ext.form.field.Text configs accepted
+                clearable: true,
+                dateFormat: 'd-M-Y',
+                altFormats: 'j-M-Y',
             }
-        },{
-            title: 'Settings',
-            iconCls: 'x-fa fa-cog',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        }
-    ]
-});
+           }
+          },
+    
+    ];
+    Ext.define('NewExtApp.view.main.Main', {
+    
+    extend: "Ext.grid.Grid",
+    title: 'Simpsons',
+    columns: columns,
+    store: store,
+    layout: 'fit',
+    fullscreen: true,
+    
+    // Turn on Cell Editing
+    plugins: [{
+        type: "cellediting",
+        triggerEvent: 'tap'
+        }, {
+        type: 'gridfilterbar'
+        }]
+    });
