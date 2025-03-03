@@ -1,56 +1,19 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting causes an instance of this class to be created and
- * added to the Viewport container.
- */
 Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
-    requires: [
-        'Ext.MessageBox',
-        'Ext.layout.Fit'
-    ],
-
-    controller: 'main',
-    viewModel: 'main',
-
-    defaults: {
-        tab: {
-            iconAlign: 'top'
+    extend: 'Ext.Container',
+    padding: 10,
+        items: {
+            xtype: 'button',
+            text: 'My Button',
+           // badgeText: '2',
+            handler: function () {
+    
+    var extDate1 = Ext.Date.parse('2018-03-25T02:00:00Z', 'c'),
+    nativeDate1 = new Date('2018-03-25T02:00:00Z'), //native version
+    extDate2 = Ext.Date.parse('2018-03-25T03:00:00Z', 'c'),
+    nativeDate2 = new Date('2018-03-25T03:00:00Z');
+    //Expected Sun Mar 25 2018 04:00:00 GMT+0200
+    console.log('extDate1', extDate1);
+    console.log('nativeDate1', nativeDate1);
         }
-    },
-
-    tabBarPosition: 'bottom',
-
-    items: [
-        // TODO - Replace the content of this view to suit the needs of your application.
-        {
-            title: 'Home',
-            iconCls: 'x-fa fa-home',
-            layout: 'fit',
-            // The following grid shares a store with the classic version's grid as well!
-            items: [{
-                xtype: 'mainlist'
-            }]
-        },{
-            title: 'Users',
-            iconCls: 'x-fa fa-user',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Groups',
-            iconCls: 'x-fa fa-users',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Settings',
-            iconCls: 'x-fa fa-cog',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        }
-    ]
+    }
 });
