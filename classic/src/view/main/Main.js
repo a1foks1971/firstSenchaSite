@@ -1,25 +1,34 @@
 Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.form.ComboBox', // Classic Toolkit Grid
+    extend: 'Ext.view.View', // Classic Toolkit Grid
     xtype: 'cell-editing',
+    requires: [
+        'Ext.grid.plugin.RowEditing' // Classic toolkit uses RowEditing plugin for cell editing
+    ],
+    height: 400,
+    width: 700,
     
-    fieldLabel: 'Select Country',
     store: {
-        model: 'Country',
+        model: 'Product',
         data: [
-            { code: 'US', name: 'United States' },
-            { code: 'CA', name: 'Canada' },
-            { code: 'UK', name: 'United Kingdom' }
+            { id: 1, name: 'Laptop', price: 1000 },
+            { id: 2, name: 'Smartphone', price: 700 }
         ]
     },
-    queryMode: 'local',
-    displayField: 'name',
-    valueField: 'code'
+    tpl: new Ext.XTemplate(
+        '<tpl for=".">',
+        '<div class="product">',
+        '<h3>{name}</h3>',
+        '<p>Price: {price}</p>',
+        '</div>',
+        '</tpl>'
+    ),
+    itemSelector: 'div.product'
     });
     
-    Ext.define('Country', function () {
+    Ext.define('Product', function () {
     return {
         extend: 'Ext.data.Model',
         idProperty:'_id',
-        fields: ['code', 'name']
+        fields: ['id', 'name', 'price']
     };
     });
