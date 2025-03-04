@@ -1,103 +1,177 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting automatically applies the "viewport"
- * plugin causing this view to become the body element (i.e., the viewport).
- *
- * TODO - Replace this content of this view to suite the needs of your application.
- */
 Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
+    extend: 'Ext.grid.Panel',
+    xtype: 'advanced-grouping-grid',
     requires: [
-        'Ext.plugin.Viewport',
-        'Ext.window.MessageBox',
-
-        'NewExtApp.view.main.MainController',
-        'NewExtApp.view.main.MainModel',
-        'NewExtApp.view.main.List'
+    
+    'Ext.grid.plugin.GroupingPanel',
+    'Ext.grid.plugin.Summaries'
     ],
-
-    controller: 'main',
-    viewModel: 'main',
-
-    ui: 'navigation',
-
-    tabBarHeaderPosition: 1,
-    titleRotation: 0,
-    tabRotation: 0,
-
-    header: {
-        layout: {
-            align: 'stretchmax'
+    
+    title: 'Sales',
+    width: 750,
+    height: 350,
+    
+    collapsible: true,
+    collapseFirst: false,
+    frame: true,
+    minHeight: 200,
+    
+    bind: '{sales}',
+    
+    columns: [ {
+        dataIndex: 'company',
+        text: 'Company',
+        groupable: true,
+        flex: 1
+    }, {
+        text: 'Date',
+        dataIndex: 'date',
+        xtype: 'datecolumn'
+    }, {
+        xtype: 'numbercolumn',
+        dataIndex: 'price',
+        text: 'Value',
+        summaryFormatter: 'number("0,000.00")'
+    }],
+    
+    features: [{
+        ftype: 'advancedgroupingsummary',
+        startCollapsed: true
+    }],
+    
+    enableLocking: true,
+    
+    plugins: [{
+        ptype: 'groupingpanel'},
+        {ptype : 'gridsummaries'
+    }],
+    
+    viewModel: {
+        data: {
+            groupBy: null
         },
-        title: {
-            bind: {
-                text: '{name}'
-            },
-            flex: 0
-        },
-        iconCls: 'fa-th-list'
-    },
-
-    tabBar: {
-        flex: 1,
-        layout: {
-            align: 'stretch',
-            overflowHandler: 'none'
-        }
-    },
-
-    responsiveConfig: {
-        tall: {
-            headerPosition: 'top'
-        },
-        wide: {
-            headerPosition: 'left'
-        }
-    },
-
-    defaults: {
-        bodyPadding: 20,
-        tabConfig: {
-            responsiveConfig: {
-                wide: {
-                    iconAlign: 'left',
-                    textAlign: 'left'
-                },
-                tall: {
-                    iconAlign: 'top',
-                    textAlign: 'center',
-                    width: 120
-                }
+        stores: {
+            sales: {
+                type: 'sales',
+                groupers: [
+                   'company'
+                ]
             }
         }
     },
-
-    items: [{
-        title: 'Home',
-        iconCls: 'fa-home',
-        // The following grid shares a store with the classic version's grid as well!
+    
+    header: {
+        itemPosition: 1, // after title before collapse tool
         items: [{
-            xtype: 'mainlist'
+            ui: 'default-toolbar',
+            xtype: 'button',
+            cls: 'dock-tab-btn',
+            text: 'Group summary position',
+            menu: [{
+                text: 'top',
+                handler: 'changeGroupSummaryPosition'
+            }, {
+                text: 'bottom',
+                handler: 'changeGroupSummaryPosition'
+            }, {
+                text: 'hidden',
+                handler: 'changeGroupSummaryPosition'
+            }]
+        }, {
+            ui: 'default-toolbar',
+            xtype: 'button',
+            cls: 'dock-tab-btn',
+            text: 'Summary position',
+            menu: [{
+                text: 'docked',
+                handler: 'changeSummaryPosition'
+            }, {
+                text: 'top',
+                handler: 'changeSummaryPosition'
+            }, {
+                text: 'bottom',
+                handler: 'changeSummaryPosition'
+            }, {
+                text: 'hidden',
+                handler: 'changeSummaryPosition'
+            }]
+        }, {
+            ui: 'default-toolbar',
+            xtype: 'button',
+            cls: 'dock-tab-btn',
+            text: 'Visibility',
+            menu: [{
+                text: 'Expand all',
+                handler: 'expandAll'
+            }, {
+                text: 'Collapse all',
+                handler: 'collapseAll'
+            }]
         }]
-    }, {
-        title: 'Users',
-        iconCls: 'fa-user',
-        bind: {
-            html: '{loremIpsum}'
+    }
+    
+    });
+    
+    Ext.define('SaleModel', function() {
+    var regions = {
+        "Belgium": 'Europe',
+        "Netherlands": 'Europe',
+        "United Kingdom": 'Europe',
+        "Canada": 'North America',
+        "United States": 'North America',
+        "Australia": 'Australia'
+    };
+    
+    return {
+        extend: 'Ext.data.Model',
+        requires: ['Ext.data.identifier.Sequential'],
+       idProperty:'_id',
+        identifier: {
+         type: 'sequential',
+         id: '_id'
+        },
+        fields: [
+            { name: 'id', type: 'int' },
+            { name: 'company', type: 'string' },
+            { name: 'country', type: 'string' },
+            { name: 'person', type: 'string' },
+            { name: 'date', type: 'date', dateFormat: 'c' },
+            { name: 'value', type: 'float', allowNull: true },
+            { name: 'quantity', type: 'float', allowNull: true },
+            {
+                name: 'year',
+                calculate: function(data) {
+                    return data.date ? parseInt(Ext.Date.format(data.date, "Y"), 10) : null;
+                }
+            }, {
+                name: 'month',
+                calculate: function(data) {
+                    return data.date ? parseInt(Ext.Date.format(data.date, "m"), 10) - 1 : null;
+                }
+            }, {
+                name: 'continent',
+                calculate: function(data) {
+                    return regions[data.country];
+                }
+            }
+        ]
+    };
+    });
+    
+    Ext.define('Sales', {
+    extend: 'Ext.data.Store',
+    alias: 'store.sales',
+    
+    model:'SaleModel',
+    proxy: {
+        // load using HTTP
+        type: 'ajax',
+        limitParam: null,
+        url: 'classic/resources/data.json',
+        // the return will be JSON, so lets set up a reader
+        reader: {
+            type: 'json'
         }
-    }, {
-        title: 'Groups',
-        iconCls: 'fa-users',
-        bind: {
-            html: '{loremIpsum}'
-        }
-    }, {
-        title: 'Settings',
-        iconCls: 'fa-cog',
-        bind: {
-            html: '{loremIpsum}'
-        }
-    }]
+    },
+    autoLoad: true
 });
