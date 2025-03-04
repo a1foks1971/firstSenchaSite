@@ -201,4 +201,4 @@ Ext.define('NewExtApp.view.main.Main', {
         }
     },
     autoLoad: true
-    });
+});
