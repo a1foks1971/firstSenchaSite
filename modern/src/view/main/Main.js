@@ -1,27 +1,36 @@
 Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.grid.Grid',
+    extend: 'Ext.form.Panel',
     xtype: 'cell-editing',
     
     height: 400,
     width: 700,
     
-    title: 'Users',
-    store: {
-        model: 'SaleModel',
-        data: [
-            { id: 1, name: 'John Doe', age: 30, email: 'john@example.com' },
-            { id: 2, name: 'Jane Doe', age: 25, email: 'jane@example.com' }
-        ]
-    },
-    columns: [
-        { text: 'ID', dataIndex: 'id' },
-        { text: 'Name', dataIndex: 'name', flex: 1 },
-        { text: 'Age', dataIndex: 'age' },
-        { text: 'Email', dataIndex: 'email', flex: 1 }
+    title: 'User Details',
+    bodyPadding: 10,
+    items: [
+        { xtype: 'textfield', name: 'name', label: 'Name' },
+        { xtype: 'numberfield', name: 'age', label: 'Age' },
+        { xtype: 'textfield', name: 'email', label: 'Email' }
+    ],
+    buttons: [
+        {
+            text: 'Load Record',
+            handler: function (btn) {
+                var form = btn.up('form'),
+                    person = Ext.create('Person', {
+                        id: 1,
+                        name: 'John Doe',
+                        age: 30,
+                        email: 'john@example.com'
+                    });
+    
+        form.loadRecord(person);
+    }
+    }
     ]
     });
     
-    Ext.define('SaleModel', function () {
+    Ext.define('Person', function () {
     return {
         extend: 'Ext.data.Model',
         idProperty:'_id',
