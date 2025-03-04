@@ -1,56 +1,204 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting causes an instance of this class to be created and
- * added to the Viewport container.
- */
 Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
+    extend: 'Ext.grid.TreeGrouped',
+    xtype: 'tree-grouped-grid',
+    
     requires: [
-        'Ext.MessageBox',
-        'Ext.layout.Fit'
+       // 'KitchenSink.view.grid.addons.TreeGroupedGridController',
+        'Ext.grid.cell.Number',
+        'Ext.grid.plugin.GroupingPanel',
+        'Ext.grid.plugin.Summaries'
     ],
-
-    controller: 'main',
-    viewModel: 'main',
-
-    defaults: {
-        tab: {
-            iconAlign: 'top'
+    
+    //controller: 'tree-grouped-grid',
+    
+    title: 'Tree grouped grid',
+    stateful: true,
+    stateId: 'tree-grouped-grid',
+    
+    groupHeaderTpl: '{name} ({group.length})',
+    summaryPosition: 'docked',
+    
+    plugins: {
+        groupingpanel: true,
+        gridsummaries: true
+    },
+    
+    store: {
+        type: 'sales',
+    
+    groupers: [{
+        property: 'date',
+        // you can provide a formatter that is used to create groups
+        formatter: 'date("Y")'
+    }, 'person', 'company'],
+    },
+    
+    columns: [
+        {
+            text: 'Company',
+            dataIndex: 'company',
+            groupable: true,
+            flex: 1,
+            filterType: 'string'
+        },
+        {
+            text: 'Country',
+            dataIndex: 'country',
+            groupable: true,
+            flex: 1,
+            filterType: 'list'
+        },
+        {
+            text: 'Person',
+            dataIndex: 'person',
+            groupable: true,
+            summary: 'count'
+        },
+        {
+            text: 'Date',
+            dataIndex: 'date',
+            xtype: 'datecolumn',
+            filterType: 'date'
+        },
+        {
+            text: 'Value',
+            dataIndex: 'value',
+            xtype: 'numbercolumn',
+            align: 'right',
+            filterType: 'number',
+    
+        summary: 'average'
+    },
+    {
+        text: 'Quantity',
+        dataIndex: 'quantity',
+        xtype: 'numbercolumn',
+        align: 'right',
+        summary: 'sum'
+    }
+    ],
+    
+    titleBar: {
+        shadow: false,
+        items: [{
+            xtype: 'button',
+            align: 'right',
+            text: 'Group sum',
+            menu: {
+                defaults: {
+                    handler: 'setGroupSummaryPosition'
+                },
+                indented: false,
+                items: [{
+                    text: 'Top',
+                    sum: 'top'
+                }, {
+                    text: 'Bottom',
+                    sum: 'bottom'
+                }, {
+                    text: 'Hidden',
+                    sum: 'hidden'
+                }]
+            }
+        }, {
+            xtype: 'button',
+            align: 'right',
+            text: 'Sum',
+            menu: {
+                defaults: {
+                    handler: 'setSummaryPosition'
+                },
+                items: [{
+                    text: 'Docked',
+                    sum: 'docked'
+                }, {
+                    text: 'Top',
+                    sum: 'top'
+                }, {
+                    text: 'Bottom',
+                    sum: 'bottom'
+                }, {
+                    text: 'Hidden',
+                    sum: 'hidden'
+                }]
+            }
+        }, {
+            xtype: 'button',
+            align: 'right',
+            text: 'Visibility',
+            menu: {
+                items: [{
+                    text: 'Expand all',
+                    handler: 'expandAll'
+                }, {
+                    text: 'Collapse all',
+                    handler: 'collapseAll'
+                }]
+            }
+        }]
+    }
+    
+    });
+    Ext.define('SaleModel', function() {
+    var regions = {
+        "Belgium": 'Europe',
+        "Netherlands": 'Europe',
+        "United Kingdom": 'Europe',
+        "Canada": 'North America',
+        "United States": 'North America',
+        "Australia": 'Australia'
+    };
+    
+    return {
+        extend: 'Ext.data.Model',
+        requires: ['Ext.data.identifier.Sequential'],
+       idProperty:'_id',
+        identifier: {
+         type: 'sequential',
+         id: '_id'
+        },
+        fields: [
+            { name: 'id', type: 'int' },
+            { name: 'company', type: 'string' },
+            { name: 'country', type: 'string' },
+            { name: 'person', type: 'string' },
+            { name: 'date', type: 'date', dateFormat: 'c' },
+            { name: 'value', type: 'float', allowNull: true },
+            { name: 'quantity', type: 'float', allowNull: true },
+            {
+                name: 'year',
+                calculate: function(data) {
+                    return data.date ? parseInt(Ext.Date.format(data.date, "Y"), 10) : null;
+                }
+            }, {
+                name: 'month',
+                calculate: function(data) {
+                    return data.date ? parseInt(Ext.Date.format(data.date, "m"), 10) - 1 : null;
+                }
+            }, {
+                name: 'continent',
+                calculate: function(data) {
+                    return regions[data.country];
+                }
+            }
+        ]
+    };
+    });
+    
+    Ext.define('Sales', {
+    extend: 'Ext.data.Store',
+    alias: 'store.sales',
+    
+    model:'SaleModel',
+    proxy: {
+        // load using HTTP
+        type: 'ajax',
+        limitParam: null,
+        url: 'modern/resources/data.json',
+        // the return will be JSON, so lets set up a reader
+        reader: {
+            type: 'json'
         }
     },
-
-    tabBarPosition: 'bottom',
-
-    items: [
-        // TODO - Replace the content of this view to suit the needs of your application.
-        {
-            title: 'Home',
-            iconCls: 'x-fa fa-home',
-            layout: 'fit',
-            // The following grid shares a store with the classic version's grid as well!
-            items: [{
-                xtype: 'mainlist'
-            }]
-        },{
-            title: 'Users',
-            iconCls: 'x-fa fa-user',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Groups',
-            iconCls: 'x-fa fa-users',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Settings',
-            iconCls: 'x-fa fa-cog',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        }
-    ]
-});
+    autoLoad: true
+    });
