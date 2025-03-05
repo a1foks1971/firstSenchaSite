@@ -1,10 +1,6 @@
 Ext.define('NewExtApp.view.main.Main', {
-    extend: "Ext.container.Container",
-    height: 500,
-    width: 500,
-    items:[{
-        xtype: "combobox",
-        layout: "vbox",
+    extend: 'Ext.form.field.ComboBox',
+    layout: "vbox",
          editable: true,
          store: Ext.create('Ext.data.Store', {
              model: Ext.define(null, {
@@ -17,11 +13,27 @@ Ext.define('NewExtApp.view.main.Main', {
                  reader: {
                      type: "json"
                  }
-             }, data: [{
-                 value: "AAA",
-                 text: "AAA"
-             }]
-         })
-    } ]
-    
-    });
+             }, data: [
+                {
+                    value: "AAA",
+                    text: "AAA"
+                   },
+                   {
+                    value: "BBB",
+                    text: "BBB"
+                   },
+                   {
+                    value: "CCC",
+                    text: "CCC"
+                   },
+                   {
+                    value: "DDD",
+                    text: "DDD"
+                   },
+                   {
+                    value: "EEE",
+                    text: "EEE"
+                   }
+                ]
+         })    
+ }); 
