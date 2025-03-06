@@ -1,103 +1,307 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting automatically applies the "viewport"
- * plugin causing this view to become the body element (i.e., the viewport).
- *
- * TODO - Replace this content of this view to suite the needs of your application.
- */
-Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
-    requires: [
-        'Ext.plugin.Viewport',
-        'Ext.window.MessageBox',
-
-        'NewExtApp.view.main.MainController',
-        'NewExtApp.view.main.MainModel',
-        'NewExtApp.view.main.List'
-    ],
-
-    controller: 'main',
-    viewModel: 'main',
-
-    ui: 'navigation',
-
-    tabBarHeaderPosition: 1,
-    titleRotation: 0,
-    tabRotation: 0,
-
-    header: {
-        layout: {
-            align: 'stretchmax'
-        },
-        title: {
-            bind: {
-                text: '{name}'
-            },
-            flex: 0
-        },
-        iconCls: 'fa-th-list'
-    },
-
-    tabBar: {
-        flex: 1,
-        layout: {
-            align: 'stretch',
-            overflowHandler: 'none'
+Ext.define('User', {
+    extend: 'Ext.data.Model',
+    fields: ['name', 'email', 'phone']
+    });
+    
+    var userStore = Ext.create('Ext.data.Store', {
+    model: 'User',
+    data: [{
+            name: 'Lisa',
+            email: 'lisa@simpsons.com',
+            phone: '555-111-1224'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Lisa',
+            email: 'lisa@simpsons.com',
+            phone: '555-111-1224'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Bart',
+            email: 'bart@simpsons.com',
+            phone: '<q =\"'
+        }, {
+            name: 'Homer',
+            email: 'homer@simpsons.com',
+            phone: '555-222-1244'
+        }, {
+            name: 'Marge',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
+        }, {
+            name: 'Shreya',
+            email: 'marge@simpsons.com',
+            phone: '555-222-1254'
         }
-    },
-
-    responsiveConfig: {
-        tall: {
-            headerPosition: 'top'
-        },
-        wide: {
-            headerPosition: 'left'
-        }
-    },
-
-    defaults: {
-        bodyPadding: 20,
-        tabConfig: {
-            responsiveConfig: {
-                wide: {
-                    iconAlign: 'left',
-                    textAlign: 'left'
-                },
-                tall: {
-                    iconAlign: 'top',
-                    textAlign: 'center',
-                    width: 120
-                }
+    
+    ]
+    });
+    
+    Ext.define('NewExtApp.view.main.Main', {
+    extend:'Ext.grid.Panel',
+       // renderTo: Ext.getBody(),
+        store: userStore,
+        storeId: 'mystore',
+        width: 400,
+        height: 400,
+        bufferedRenderer: true,
+        enableVariableHeight: true,
+        title: 'Application Users',
+        columns: [{
+            dataIndex: 'id',
+            locked: true,
+        }, {
+            text: 'Name',
+            width: 100,
+            locked: true,
+            sortable: false,
+            hideable: false,
+            dataIndex: 'name'
+        }, {
+            dataIndex: 'id',
+            text: 'ID'
+        }, {
+            dataIndex: 'name',
+            text: 'Name'
+        }, {
+            xtype: 'actioncolumn',
+            dataIndex: 'name',
+            text: 'action',
+            width: 45,
+            disabled: false,
+    //                locked: true,
+    //                lockable: false,
+            items: [{
+                iconCls: 'x-fa fa-home',
+                tooltip: 'Test'
+            }]
+        }, {
+            text: 'Email Address',
+            width: 150,
+            dataIndex: 'email',
+            hidden: true
+        }, {
+            text: 'Phone Number',
+            flex: 1,
+            dataIndex: 'phone',
+            renderer: function (v) {
+                return Ext.htmlEncode(v);
             }
-        }
-    },
-
-    items: [{
-        title: 'Home',
-        iconCls: 'fa-home',
-        // The following grid shares a store with the classic version's grid as well!
+        }],
+    
+    plugins: [{
+        ptype: 'cellediting',
+        clicksToEdit: 2
+    }, {
+        ptype: 'gridfilters',
+    }],
+    dockedItems: [{
+        xtype: 'toolbar',
+        dock: 'top',
+        padding: '5 0 5 5',
         items: [{
-            xtype: 'mainlist'
+            xtype: 'button',
+            text: 'Delete Row',
+            disabled: false,
+            handler: function (record) {
+                userStore.remove(userStore.getAt(0));
+            }
+        }, {
+            xtype: 'tbfill' /* begin using the right-justified button container */
+        }, {
+            xtype: 'displayfield',
+            itemId: 'lm-recship-grid-panel-errormsg-displayfield',
+            hidden: true,
+            name: 'errorMessage',
+            fieldCls: 'vpError'
         }]
-    }, {
-        title: 'Users',
-        iconCls: 'fa-user',
-        bind: {
-            html: '{loremIpsum}'
-        }
-    }, {
-        title: 'Groups',
-        iconCls: 'fa-users',
-        bind: {
-            html: '{loremIpsum}'
-        }
-    }, {
-        title: 'Settings',
-        iconCls: 'fa-cog',
-        bind: {
-            html: '{loremIpsum}'
-        }
     }]
-});
+    });
+    
+    //return;
+
+    /*
+    var task = {
+        run: function () {
+            userStore.load()
+        },
+        interval: 5000 //5 seconds
+    }
+    
+    var runner = new Ext.util.TaskRunner();
+    
+    runner.start(task);
+    */
