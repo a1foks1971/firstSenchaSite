@@ -277,10 +277,14 @@ Ext.define('User', {
             text: 'Delete Row',
             disabled: false,
             handler: function (record) {
-                userStore.remove(userStore.getAt(0));
+                // userStore.remove(userStore.getAt(0));
+                var rec = this.up('grid').getSelection()
+ 
+                userStore.remove(rec)
+ 
             }
         }, {
-            xtype: 'tbfill' /* begin using the right-justified button container */
+            xtype: 'tbfill' // begin using the right-justified button container /
         }, {
             xtype: 'displayfield',
             itemId: 'lm-recship-grid-panel-errormsg-displayfield',
@@ -292,8 +296,6 @@ Ext.define('User', {
     });
     
     //return;
-
-    /*
     var task = {
         run: function () {
             userStore.load()
@@ -303,5 +305,4 @@ Ext.define('User', {
     
     var runner = new Ext.util.TaskRunner();
     
-    runner.start(task);
-    */
+    // runner.start(task);
