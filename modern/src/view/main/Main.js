@@ -1,56 +1,40 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting causes an instance of this class to be created and
- * added to the Viewport container.
- */
 Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
-    requires: [
-        'Ext.MessageBox',
-        'Ext.layout.Fit'
-    ],
-
+    extend: 'Ext.Container',
     controller: 'main',
-    viewModel: 'main',
-
-    defaults: {
-        tab: {
-            iconAlign: 'top'
+    
+    viewModel: {
+        stores: {
+            gridStore: {
+                fields: ['text', 'value'],
+                // You may need this
+                         autoLoad: true,
+                          autoLoadOnFilterEnd: true,
+                remoteFilter: true,
+                proxy: {
+                    type: 'ajax',
+                    url: 'modern/resources/data1.json',
+                    reader: {
+                        type: 'json',
+                        rootProperty: 'records'
+                    }
+                }
+            }
         }
     },
-
-    tabBarPosition: 'bottom',
-
-    items: [
-        // TODO - Replace the content of this view to suit the needs of your application.
-        {
-            title: 'Home',
-            iconCls: 'x-fa fa-home',
-            layout: 'fit',
-            // The following grid shares a store with the classic version's grid as well!
+    layout: 'fit',
             items: [{
-                xtype: 'mainlist'
+                xtype: 'grid',
+                bind: '{gridStore}',
+                reference: 'devicegrid',
+    
+            columns: [{
+                dataIndex: 'value',
+                text: 'Value'
+            }, {
+                dataIndex: 'text',
+                text: 'Text'
             }]
-        },{
-            title: 'Users',
-            iconCls: 'x-fa fa-user',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Groups',
-            iconCls: 'x-fa fa-users',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Settings',
-            iconCls: 'x-fa fa-cog',
-            bind: {
-                html: '{loremIpsum}'
-            }
+        }],getModelID: function () {
+            return '1'
         }
-    ]
-});
+    });
