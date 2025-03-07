@@ -1,56 +1,93 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting causes an instance of this class to be created and
- * added to the Viewport container.
- */
+var store = Ext.create('Ext.data.Store', {
+    fields: ['name', 'email', 'phone'],
+    data: [
+        { 'name': 'Lisa', "email": "lisa@simpsons.com", "phone": "555-111-1224" },
+        { 'name': 'Bart', "email": "bart@simpsons.com", "phone": "555-222-1234" },
+        { 'name': 'Homer', "email": "home@simpsons.com", "phone": "555-222-1244" },
+        { 'name': 'Marge', "email": "marge@simpsons.com", "phone": "555-222-1254" }
+    ]
+});
+
 Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
-    requires: [
-        'Ext.MessageBox',
-        'Ext.layout.Fit'
-    ],
-
-    controller: 'main',
-    viewModel: 'main',
-
-    defaults: {
-        tab: {
-            iconAlign: 'top'
-        }
+    extend: 'Ext.Container',
+    layout: {
+        type: 'hbox',
+        align: 'stretch'
     },
 
-    tabBarPosition: 'bottom',
-
-    items: [
-        // TODO - Replace the content of this view to suit the needs of your application.
-        {
-            title: 'Home',
-            iconCls: 'x-fa fa-home',
-            layout: 'fit',
-            // The following grid shares a store with the classic version's grid as well!
-            items: [{
-                xtype: 'mainlist'
-            }]
-        },{
-            title: 'Users',
-            iconCls: 'x-fa fa-user',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Groups',
-            iconCls: 'x-fa fa-users',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Settings',
-            iconCls: 'x-fa fa-cog',
-            bind: {
-                html: '{loremIpsum}'
-            }
+    viewModel: {
+        data: {
+            foo: 'Bound title'
         }
+    },
+    defaults: {
+        xtype: 'panel',
+        flex: 1,
+        padding: 2,
+        layout: {
+            type: 'hbox',
+            align: 'stretch'
+        }
+    },
+    items: [
+        {
+            //             title: 'Grid behaviour without configured titleBar',
+            defaults: {
+                xtype: 'grid',
+                flex: 1,
+                padding: 2,
+                store: store,
+                columns: [
+                    { text: 'Name', dataIndex: 'name', width: 200 },
+                    { text: 'Email', dataIndex: 'email', width: 250 },
+                    { text: 'Phone', dataIndex: 'phone', width: 120 }
+                ],
+                style: {
+                    border: 'solid 1px lightgrey'
+                }
+            },
+            items: [
+                {
+                    html: '<font color=red><b>FAIL: WITH TITLEBAR - Grid should display titleBar with title</b></font>',
+                    // THIS SHOULD ADD A TITLEBAR TO THE GRID WITH A TITLE
+                    // BUT DID NOT. This previously only worked if 'title' was
+                    // configured with a value.
+                    titleBar: {
+                        title: 'Static title',
+                        docked: 'top'
+                    }
+                },
+            ]
+        },
+        {
+            //             title: 'Grid behaviour without configured titleBar',
+            defaults: {
+                xtype: 'grid',
+                flex: 1,
+                padding: 2,
+                store: store,
+                columns: [
+                    { text: 'Name', dataIndex: 'name', width: 200 },
+                    { text: 'Email', dataIndex: 'email', width: 250 },
+                    { text: 'Phone', dataIndex: 'phone', width: 120 }
+                ],
+                style: {
+                    border: 'solid 1px lightgrey'
+                }
+            },
+            items: [
+                {
+                    html: '<font color=red><b>FAIL: WITH TITLEBAR - Grid should display titleBar with title</b></font>',
+                    // THIS SHOULD ADD A TITLEBAR TO THE GRID WITH A TITLE
+                    // BUT DID NOT. This previously only worked if 'title' was
+                    // configured with a value.
+                    titleBar: {
+                        title: 'Static title',
+                        docked: 'top'
+                    }
+                },
+            ]
+        },
+
     ]
 });
