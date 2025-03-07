@@ -1,14 +1,14 @@
 Ext.define('NewExtApp.view.main.Main', {
     extend: 'Ext.Container',
     controller: 'main',
-    
+
     viewModel: {
         stores: {
             gridStore: {
                 fields: ['text', 'value'],
                 // You may need this
-                         autoLoad: true,
-                          autoLoadOnFilterEnd: true,
+                autoLoad: true,
+                autoLoadOnFilterEnd: true,
                 remoteFilter: true,
                 proxy: {
                     type: 'ajax',
@@ -22,19 +22,19 @@ Ext.define('NewExtApp.view.main.Main', {
         }
     },
     layout: 'fit',
-            items: [{
-                xtype: 'grid',
-                bind: '{gridStore}',
-                reference: 'devicegrid',
-    
-            columns: [{
-                dataIndex: 'value',
-                text: 'Value'
-            }, {
-                dataIndex: 'text',
-                text: 'Text'
-            }]
-        }],getModelID: function () {
-            return '1'
-        }
-    });
+    items: [{
+        xtype: 'grid',
+        bind: '{gridStore}',
+        reference: 'devicegrid',
+
+        columns: [{
+            dataIndex: 'value',
+            text: 'Value'
+        }, {
+            dataIndex: 'text',
+            text: 'Text'
+        }]
+    }], getModelID: function () {
+        return '1'
+    }
+});

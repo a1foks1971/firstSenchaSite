@@ -15,16 +15,16 @@ Ext.define('NewExtApp.view.main.MainController', {
         if (choice === 'yes') {
             //
         }
-    }
-    ,
+    },
+    
     init: function (view) {
         view.callParent(arguments);
-    
+
         var deviceGrid = view.lookup('devicegrid');
         var store = deviceGrid.lookupViewModel().getStore('gridStore')
         store.addFilter({
             property: 'value',
             value: view.getModelID()
         });
-    }    
+    }
 });
