@@ -1,56 +1,92 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting causes an instance of this class to be created and
- * added to the Viewport container.
- */
-Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
-    requires: [
-        'Ext.MessageBox',
-        'Ext.layout.Fit'
-    ],
-
-    controller: 'main',
-    viewModel: 'main',
-
-    defaults: {
-        tab: {
-            iconAlign: 'top'
-        }
-    },
-
-    tabBarPosition: 'bottom',
-
-    items: [
-        // TODO - Replace the content of this view to suit the needs of your application.
-        {
-            title: 'Home',
-            iconCls: 'x-fa fa-home',
-            layout: 'fit',
-            // The following grid shares a store with the classic version's grid as well!
-            items: [{
-                xtype: 'mainlist'
-            }]
-        },{
-            title: 'Users',
-            iconCls: 'x-fa fa-user',
-            bind: {
-                html: '{loremIpsum}'
+Ext.define('ComboTest.State', {
+    extend: 'Ext.data.Model',
+    alias: 'model.state',
+    
+    idProperty: 'postId',
+    fields: [{
+        name: 'postId',
+        mapping: 'post_id'
+    }, {
+        name: 'title',
+        mapping: 'topic_title'
+    }, {
+        name: 'topicId',
+        mapping: 'topic_id'
+    }, {
+        name: 'author',
+        mapping: 'author'
+    }, {
+        name: 'lastPost',
+        mapping: 'post_time',
+        type: 'date',
+        dateFormat: 'timestamp'
+    }, {
+        name: 'excerpt',
+        mapping: 'post_text'
+    }]
+    });
+    
+    Ext.define('NewExtApp.view.main.Main', {
+    extend: 'Ext.form.Panel',
+    
+    items: [{
+        xtype: 'combobox',
+    
+    label: 'Buggy Combobox',
+    multiSelect: true,
+    forceSelection: false,
+    // queryMode: 'local', // Set to 'local' if you want local filtering
+    queryMode: 'remote', // Set to 'local' if you want local filtering
+    displayField: 'title',
+    valueField: 'postId',
+    minChars: 3,
+    store: {
+        model: 'ComboTest.State',
+        pageSize: 100,
+        proxy: {
+            type: 'memory', // Use 'memory' proxy for local data
+            reader: {
+                type: 'json',
+                rootProperty: 'topics', // Root property in the local data
+                totalProperty: 'totalCount'
             }
-        },{
-            title: 'Groups',
-            iconCls: 'x-fa fa-users',
-            bind: {
-                html: '{loremIpsum}'
+        },
+        data: [
+            {
+                "post_id": 1,
+                "topic_title": "Introduction to ExtJS",
+                "topic_id": 101,
+                "author": "John Doe",
+                "post_time": "2024-01-01T12:00:00",
+                "post_text": "This is a basic introduction to ExtJS."
+            },
+            {
+                "post_id": 2,
+                "topic_title": "Working with ExtJS Grid",
+                "topic_id": 102,
+                "author": "Jane Smith",
+                "post_time": "2024-01-02T14:00:00",
+                "post_text": "Learn how to work with ExtJS Grid."
+            },
+            {
+                "post_id": 3,
+                "topic_title": "Advanced ExtJS Components",
+                "topic_id": 103,
+                "author": "Tom Green",
+                "post_time": "2024-01-03T16:30:00",
+                "post_text": "Explore advanced components in ExtJS."
+            },
+            {
+                "post_id": 4,
+                "topic_title": "ExtJS Layouts and Views",
+                "topic_id": 104,
+                "author": "Anna White",
+                "post_time": "2024-01-04T09:15:00",
+                "post_text": "Understand how to use layouts and views in ExtJS."
             }
-        },{
-            title: 'Settings',
-            iconCls: 'x-fa fa-cog',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        }
-    ]
-});
+            // Add more items as needed for testing
+        ],
+        autoLoad: false
+    }
+    }]
+    });
