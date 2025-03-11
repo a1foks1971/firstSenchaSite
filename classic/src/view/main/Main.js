@@ -1,103 +1,79 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting automatically applies the "viewport"
- * plugin causing this view to become the body element (i.e., the viewport).
- *
- * TODO - Replace this content of this view to suite the needs of your application.
- */
-Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
-
-    requires: [
-        'Ext.plugin.Viewport',
-        'Ext.window.MessageBox',
-
-        'NewExtApp.view.main.MainController',
-        'NewExtApp.view.main.MainModel',
-        'NewExtApp.view.main.List'
-    ],
-
-    controller: 'main',
-    viewModel: 'main',
-
-    ui: 'navigation',
-
-    tabBarHeaderPosition: 1,
-    titleRotation: 0,
-    tabRotation: 0,
-
-    header: {
-        layout: {
-            align: 'stretchmax'
-        },
-        title: {
-            bind: {
-                text: '{name}'
-            },
-            flex: 0
-        },
-        iconCls: 'fa-th-list'
+var store = Ext.create('Ext.data.Store', {
+    fields: ['name', 'email', 'phone'],
+    data: [
+        { 'name': 'Lisa',  "email":"lisa@simpsons.com",  "phone":"555-111-1224"  },
+        { 'name': 'Bart',  "email":"bart@simpsons.com",  "phone":"555-222-1234" },
+        { 'name': 'Homer', "email":"home@simpsons.com",  "phone":"555-222-1244"  },
+        { 'name': 'Marge', "email":"marge@simpsons.com", "phone":"555-222-1254"  }
+    ]
+  });
+   Ext.define('NewExtApp.view.main.Main', {
+    extend: 'Ext.Container',
+    layout: {
+        type: 'hbox',
+        align: 'stretch'
     },
-
-    tabBar: {
-        flex: 1,
-        layout: {
-            align: 'stretch',
-            overflowHandler: 'none'
+    viewModel: {
+        data: {
+            foo: 'Bound title'
         }
     },
-
-    responsiveConfig: {
-        tall: {
-            headerPosition: 'top'
-        },
-        wide: {
-            headerPosition: 'left'
-        }
-    },
-
     defaults: {
-        bodyPadding: 20,
-        tabConfig: {
-            responsiveConfig: {
-                wide: {
-                    iconAlign: 'left',
-                    textAlign: 'left'
-                },
-                tall: {
-                    iconAlign: 'top',
-                    textAlign: 'center',
-                    width: 120
-                }
-            }
+        xtype: 'panel',
+        flex: 1,
+        padding: 2,
+        layout: {
+            type: 'hbox',
+            align: 'stretch'
         }
     },
+    items: [
+            {
+            title: 'Grid behaviour without configured titleBar',
+            defaults: {
+                xtype: 'grid',
+                flex: 1,
+                padding: 2,
+                store: store,
+                padding: "10, 10, 10, 10",
+    columns: [
+        { text: 'Name',  dataIndex: 'name', width: 200 },
+        { text: 'Email', dataIndex: 'email', width: 250 },
+        { text: 'Phone', dataIndex: 'phone', width: 120 }
+    ],
+                style: {
+                    border: 'solid 1px lightgrey'
+                }
+            },
+            items: [
+                {
+                 html: 'PASS: NO TITLE - Grid should NOT display titlebar'
+            }
 
-    items: [{
-        title: 'Home',
-        iconCls: 'fa-home',
-        // The following grid shares a store with the classic version's grid as well!
-        items: [{
-            xtype: 'mainlist'
-        }]
-    }, {
-        title: 'Users',
-        iconCls: 'fa-user',
-        bind: {
-            html: '{loremIpsum}'
+    ],
+    },
+    {
+        title: 'Grid behaviour without configured titleBar',
+        defaults: {
+            xtype: 'grid',
+            flex: 1,
+            padding: 2,
+            store: store,
+            padding: "10, 10, 10, 10",
+columns: [
+    { text: 'Name',  dataIndex: 'name', width: 200 },
+    { text: 'Email', dataIndex: 'email', width: 250 },
+    { text: 'Phone', dataIndex: 'phone', width: 120 }
+],
+            style: {
+                border: 'solid 1px lightgrey'
+            }
+        },
+        items: [
+            {
+             html: 'PASS: NO TITLE - Grid should NOT display titlebar'
         }
-    }, {
-        title: 'Groups',
-        iconCls: 'fa-users',
-        bind: {
-            html: '{loremIpsum}'
-        }
-    }, {
-        title: 'Settings',
-        iconCls: 'fa-cog',
-        bind: {
-            html: '{loremIpsum}'
-        }
-    }]
+    ],
+    }
+]
 });
