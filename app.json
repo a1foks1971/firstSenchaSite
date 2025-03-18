@@ -16,7 +16,7 @@
      */
     "requires": [
         "font-awesome",
-        "ext-locale"
+        "locale"
     ],
 
     /**
