@@ -3,6 +3,7 @@
     "namespace": "NewExtApp",
     "version": "1.0.0.0",
     "framework": "ext",
+    "locale": "ja",
 
     /**
      * The list of required packages (with optional versions; default is "latest").
@@ -14,7 +15,8 @@
      *      ]
      */
     "requires": [
-        "font-awesome"
+        "font-awesome",
+        "ext-locale"
     ],
 
     /**
