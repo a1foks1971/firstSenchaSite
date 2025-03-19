@@ -30,21 +30,11 @@ Ext.define('NewExtApp.view.main.Main', {
     store: shows,
     items: [{
         xtype: 'button',
-        text: 'Select all',
-        handler: function (btn) {
-            var grid = btn.up('container').down('grid');
-            grid.getSelectable().selectAll()
-
+        text: 'Select',
+        handler: function () {
+            var grid = this.up('container').down('grid');
             console.log(grid.getHeaderContainer().getVisibleColumns());
-        }
-    }, {
-        xtype: 'button',
-        text: 'Deselect all',
-        handler: function (btn) {
-            var grid = btn.up('container').down('grid');
 
-            grid.getSelectable().deselectAll()
-            console.log(grid.getHeaderContainer().getVisibleColumns());
         }
     },
     {
@@ -52,7 +42,6 @@ Ext.define('NewExtApp.view.main.Main', {
         // fullscreen: true,
         store: shows,
         flex: 1,
-
         columns: [{
             text: 'Name',
             dataIndex: 'name'
@@ -62,3 +51,4 @@ Ext.define('NewExtApp.view.main.Main', {
         }]
     }]
 });
+
