@@ -1,56 +1,64 @@
-/**
- * This class is the main view for the application. It is specified in app.js as the
- * "mainView" property. That setting causes an instance of this class to be created and
- * added to the Viewport container.
- */
+var shows = Ext.create('Ext.data.Store', {
+    fields: [{
+        name: 'name',
+        type: 'string'
+    }, {
+        name: 'age',
+        type: 'int',
+        convert: null
+    }, {
+        name: 'phone',
+        type: 'string'
+    }, {
+        name: 'alive',
+        type: 'boolean',
+        defaultValue: true,
+        convert: null
+    }],
+    data: [
+        { 'name': 'Lisa', "email": "lisa@simpsons.com", "phone": "555-111-1224" },
+        { 'name': 'Bart', "email": "bart@simpsons.com", "phone": "555-222-1234" },
+        { 'name': 'Homer', "email": "home@simpsons.com", "phone": "555-222-1244" },
+        { 'name': 'Marge', "email": "marge@simpsons.com", "phone": "555-222-1254" }
+    ]
+})
+
 Ext.define('NewExtApp.view.main.Main', {
-    extend: 'Ext.tab.Panel',
-    xtype: 'app-main',
+    extend: "Ext.Container",
+    layout: "vbox",
+    fullscreen: true,
+    store: shows,
+    items: [{
+        xtype: 'button',
+        text: 'Select all',
+        handler: function (btn) {
+            var grid = btn.up('container').down('grid');
+            grid.getSelectable().selectAll()
 
-    requires: [
-        'Ext.MessageBox',
-        'Ext.layout.Fit'
-    ],
+            console.log(grid.getHeaderContainer().getVisibleColumns());
+        }
+    }, {
+        xtype: 'button',
+        text: 'Deselect all',
+        handler: function (btn) {
+            var grid = btn.up('container').down('grid');
 
-    controller: 'main',
-    viewModel: 'main',
-
-    defaults: {
-        tab: {
-            iconAlign: 'top'
+            grid.getSelectable().deselectAll()
+            console.log(grid.getHeaderContainer().getVisibleColumns());
         }
     },
+    {
+        xtype: 'grid',
+        // fullscreen: true,
+        store: shows,
+        flex: 1,
 
-    tabBarPosition: 'bottom',
-
-    items: [
-        // TODO - Replace the content of this view to suit the needs of your application.
-        {
-            title: 'Home',
-            iconCls: 'x-fa fa-home',
-            layout: 'fit',
-            // The following grid shares a store with the classic version's grid as well!
-            items: [{
-                xtype: 'mainlist'
-            }]
-        },{
-            title: 'Users',
-            iconCls: 'x-fa fa-user',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Groups',
-            iconCls: 'x-fa fa-users',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        },{
-            title: 'Settings',
-            iconCls: 'x-fa fa-cog',
-            bind: {
-                html: '{loremIpsum}'
-            }
-        }
-    ]
+        columns: [{
+            text: 'Name',
+            dataIndex: 'name'
+        }, {
+            text: 'Email',
+            dataIndex: 'email'
+        }]
+    }]
 });
